@@ -39,7 +39,7 @@ namespace WaterDelivery.Mvc.Controllers
                 {
                     await Authenticate(input.Email);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
                 }
                 else
                 {
@@ -68,7 +68,7 @@ namespace WaterDelivery.Mvc.Controllers
 
                     await Authenticate(input.Email);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
                 }
                 else
                 {
