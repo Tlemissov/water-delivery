@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using WaterDelivery.EntityFrameworkCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using AutoMapper;
+using WaterDelivery.Core.Orders;
+using WaterDelivery.Mvc.Models;
 
 namespace WaterDelivery.Mvc
 {
@@ -39,6 +42,9 @@ namespace WaterDelivery.Mvc
                });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAutoMapper();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

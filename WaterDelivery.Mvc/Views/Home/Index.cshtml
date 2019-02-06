@@ -1,8 +1,18 @@
-﻿@{
+﻿@model string
+@{
     ViewData["Title"] = "Home Page";
 }
 
+@if(ViewBag.Message != "")
+{
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div> 
+}
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Добро пожаловть!</h1>
+    <a asp-action="Order" asp-controller="Home" >Заказать воду</a>
 </div>
