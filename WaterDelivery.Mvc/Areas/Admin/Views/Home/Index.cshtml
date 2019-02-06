@@ -1,7 +1,74 @@
-﻿
+﻿@model List<WaterDelivery.Core.Orders.Order>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h4>Index</h4>
+@functions{
+    public static string GetStatus(OrderStatus status)
+    {
+        switch (status)
+        {
+            case OrderStatus.New:
+                return "Новый";
+            case OrderStatus.Checked:
+                return "Проверен";
+            case OrderStatus.Shipped:
+                return "Отправлен";
+            case OrderStatus.Delivered:
+                return "Доставлен";
+            default:
+                return "Нет статуса";
+        }
+    }
+}
+
+<h4>Список заказов</h4>
+<br />
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Ф.И.О</th>
+            <th>Адрес</th>
+            <th>Телефон</th>
+            <th>Кол-во</th>
+            <th>Статус</th>
+            <th>Дата заявки</th>
+            <th>Дата доставки</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var order in Model)
+        {
+            <tr>
+                <td>@order.FullName</td>
+                <td>@order.Adress</td>
+                <td>@order.Phone</td>
+                <td>@order.Quantity</td>
+                <td>@GetStatus(order.Status)</td>
+                <td>@order.OrderDate.ToString("dd MMMM, HH:mm")</td>
+                <td>@order.DeliveryDate?.ToString("dd MMMM, HH:mm")</td>
+                <td>
+                    @{
+                        switch (order.Status)
+                        {
+                            case OrderStatus.New:
+                                <a asp-action="Accept" asp-controller="Home" asp-area="Admin" asp-route-id="@order.Id" class="btn btn-sm btn-success">Принять заявку</a>
+                                break;
+                            case OrderStatus.Checked:
+                                <a asp-action="Send" asp-controller="Home" asp-area="Admin" asp-route-id="@order.Id" class="btn btn-sm btn-primary">Отправит заказ</a>
+                                break;
+                            case OrderStatus.Shipped:
+                                <a asp-action="Delivered" asp-controller="Home" asp-area="Admin" asp-route-id="@order.Id" class="btn btn-sm btn-warning">Доставлен</a>
+                                break;
+                            case OrderStatus.Delivered:
+                                <a asp-action="Delete" asp-controller="Home" asp-area="Admin" asp-route-id="@order.Id" class="btn btn-sm btn-danger">Удалить заявку</a>
+                                break;
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
